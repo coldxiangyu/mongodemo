@@ -2,7 +2,10 @@ package com.sinosoft.mongodemo;
 
 import com.alibaba.fastjson.JSON;
 import com.sinosoft.dao.CustomerRepository;
+import com.sinosoft.dao.PolicyRepository;
 import com.sinosoft.dao.RiskRepository;
+import com.sinosoft.entity.CustomerEntity;
+import com.sinosoft.entity.PolicyEntity;
 import com.sinosoft.entity.RiskEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -20,6 +23,8 @@ public class MongodemoApplicationTests {
     private CustomerRepository customerRepository;
     @Autowired
     private RiskRepository riskRepository;
+    @Autowired
+    private PolicyRepository policyRepository;
     @Test
     public void contextLoads() {
     }
@@ -64,5 +69,21 @@ public class MongodemoApplicationTests {
     public void test4(){
         log.info(JSON.toJSONString(riskRepository.findAllByRiskNameContains("测试")));
         log.info(JSON.toJSONString(riskRepository.findAllByRiskNameContains("健康")));
+    }
+    @Test
+    public void test5(){
+        PolicyEntity policyEntity = new PolicyEntity();
+        RiskEntity riskEntity = new RiskEntity();
+        riskEntity.setRiskAmnt("200000");
+        riskEntity.setRiskCode("10086");
+        riskEntity.setRiskName("测试产品");
+        riskEntity.setRiskChannel("网银");
+        riskEntity.setRiskPayDueTime("10");
+        riskEntity.setRiskInsureDueTime("10");
+        CustomerEntity customerEntity = new CustomerEntity("张三",15);
+        policyEntity.setBankAccName("123");
+        policyEntity.setCustomerEntity(customerEntity);
+        policyEntity.setRiskEntity(riskEntity);
+        policyRepository.save(policyEntity);
     }
 }
