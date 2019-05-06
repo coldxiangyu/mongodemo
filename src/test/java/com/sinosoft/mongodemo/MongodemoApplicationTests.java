@@ -86,4 +86,8 @@ public class MongodemoApplicationTests {
         policyEntity.setRiskEntity(riskEntity);
         policyRepository.save(policyEntity);
     }
+    @Test
+    public void testLog(){
+        log.info("测试日志");
+    }
 }
