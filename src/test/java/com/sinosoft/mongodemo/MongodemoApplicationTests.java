@@ -2,6 +2,7 @@ package com.sinosoft.mongodemo;
 
 import com.alibaba.fastjson.JSON;
 import com.sinosoft.dao.CustomerRepository;
+import com.sinosoft.dao.MongoLogRepository;
 import com.sinosoft.dao.PolicyRepository;
 import com.sinosoft.dao.RiskRepository;
 import com.sinosoft.entity.CustomerEntity;
@@ -25,6 +26,8 @@ public class MongodemoApplicationTests {
     private RiskRepository riskRepository;
     @Autowired
     private PolicyRepository policyRepository;
+    @Autowired
+    private MongoLogRepository mongoLogRepository;
     @Test
     public void contextLoads() {
     }
@@ -69,6 +72,7 @@ public class MongodemoApplicationTests {
     public void test4(){
         log.info(JSON.toJSONString(riskRepository.findAllByRiskNameContains("测试")));
         log.info(JSON.toJSONString(riskRepository.findAllByRiskNameContains("健康")));
+        log.info(JSON.toJSONString(riskRepository.findAll()));
     }
     @Test
     public void test5(){
@@ -89,5 +93,9 @@ public class MongodemoApplicationTests {
     @Test
     public void testLog(){
         log.info("测试日志");
+    }
+    @Test
+    public void test6(){
+        log.info(JSON.toJSONString(mongoLogRepository.findAll()));
     }
 }

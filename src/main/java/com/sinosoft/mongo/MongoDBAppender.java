@@ -13,6 +13,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -31,12 +32,13 @@ public class MongoDBAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
     protected void append(ILoggingEvent eventObject) {
         MongoTemplate mongoTemplate = ApplicationContextProvider.getBean(MongoTemplate.class);
         if (mongoTemplate != null) {
-            final BasicDBObject doc = new BasicDBObject();
-            doc.append("level", eventObject.getLevel().toString());
-            doc.append("logger", eventObject.getLoggerName());
-            doc.append("thread", eventObject.getThreadName());
-            doc.append("message", eventObject.getFormattedMessage());
-            mongoTemplate.insert(doc, "log");
+            MongoLogEntity mongoLogEntity = new MongoLogEntity();
+            mongoLogEntity.setLevel(eventObject.getLevel().toString());
+            mongoLogEntity.setLogger(eventObject.getLoggerName());
+            mongoLogEntity.setThread(eventObject.getThreadName());
+            mongoLogEntity.setMessage(eventObject.getFormattedMessage());
+            mongoLogEntity.setDate(eventObject.getTimeStamp());
+            mongoTemplate.save(mongoLogEntity);
         }
     }
 

@@ -2,8 +2,13 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml" />
     <appender name="MONGOLOG" class="com.sinosoft.mongo.MongoDBAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <!-- 日志收集最低日志级别 -->
+            <level>INFO</level>
+        </filter>
     </appender>
     <root level="INFO">
         <appender-ref ref="MONGOLOG" />
     </root>
+    <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
 </configuration>
